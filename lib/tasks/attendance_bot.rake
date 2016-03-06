@@ -6,17 +6,22 @@ require "google_drive"
 namespace :attendance_bot do
   desc "TODO"
   task run: :environment do
-    @telegram_bot_token = ENV["telegram_bot_token"]
-    @gsheet_key = ENV["gsheet_key"]
-    
-    @gdrive_api_id = ENV["gdrive_api_id"]
-    @gdrive_api_secret = ENV["gdrive_api_secret"]
-    @broadcast_chat_id = ENV["broadcast_chat_id"]
-    
     today = Date.today
-    personnels = get_on_leave_personnels(today)
-    message = on_leave_message(personnels[0], personnels[1], today)
-    send_telegram_message(message)
+    if today.weekday?
+      @telegram_bot_token = ENV["telegram_bot_token"]
+      @gsheet_key = ENV["gsheet_key"]
+      
+      @gdrive_api_id = ENV["gdrive_api_id"]
+      @gdrive_api_secret = ENV["gdrive_api_secret"]
+      @broadcast_chat_id = ENV["broadcast_chat_id"]
+      
+      today = Date.today
+      personnels = get_on_leave_personnels(today)
+      message = on_leave_message(personnels[0], personnels[1], today)
+      send_telegram_message(message)
+    else
+      p "Today is a weekend!"
+    end
   end
   
   def get_on_leave_personnels(date)
