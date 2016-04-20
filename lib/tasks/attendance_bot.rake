@@ -78,7 +78,7 @@ namespace :attendance_bot do
   def send_telegram_message(message)
     Telegram::Bot::Client.run(@telegram_bot_token) do |bot|
       p "attendance_bot[#{@broadcast_chat_id}]: #{message}"
-      bot.api.send_message(chat_id: @broadcast_chat_id, text: message)
+      bot.api.send_message(chat_id: @broadcast_chat_id, text: message, disable_web_page_preview: true)
     end
   end
 end
