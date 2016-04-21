@@ -25,8 +25,7 @@ namespace :attendance_bot do
   end
   
   def get_on_leave_personnels(date)
-    config = "{\"client_id\": \"#{@gdrive_api_id}\",\"client_secret\": \"#{@gdrive_api_secret}\"}"
-    session = GoogleDrive.saved_session(config)
+    session = GoogleDrive.saved_session("config.json")
     ws = session.spreadsheet_by_key(@gsheet_key).worksheets[0]
     
     r = 2
